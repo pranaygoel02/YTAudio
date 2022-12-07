@@ -9,8 +9,8 @@ function App() {
     if(localStorage.getItem('fav') === null){
       localStorage.setItem('fav', JSON.stringify([]))
     }
-    if(localStorage.getItem('playlists') === null){
-      localStorage.setItem('playlists',JSON.stringify([]))
+    if(localStorage.getItem('playlist') === null){
+      localStorage.setItem('playlist',JSON.stringify([]))
     }
   }, [])
   return (

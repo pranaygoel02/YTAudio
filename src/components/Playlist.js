@@ -1,12 +1,9 @@
-import React,{useEffect, useState} from 'react'
+import {useSelector} from 'react-redux'
 import List from './List'
 
 function Playlist() {
-    const [playlists, setPlaylists] = useState([])
-    useEffect(() => {
-        setPlaylists(JSON.parse(localStorage.getItem('playlist')))
-    }, [JSON.parse(localStorage.getItem('playlist'))])
-  return (
+  const playlists = useSelector(state=> state.playlist)
+    return (
     <List data={playlists}/>
   )
 }

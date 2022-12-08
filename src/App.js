@@ -6,6 +6,7 @@ import Playlist from './components/Playlist'
 import PlaylistLinks from './components/PlaylistLinks'
 import Fav from './components/Fav'
 import Sidenav from './components/Sidenav'
+import Search from './components/Search';
 function App() {
   return (
     <div>
@@ -17,6 +18,7 @@ function App() {
               <Route path=":id/:name" element={<Playlist/>}/>
             </Route>
             <Route path="fav" element={<Fav/>} />
+            <Route path='search' element={<Search/>}/>
           </Route>
         </Routes>
       </Router>

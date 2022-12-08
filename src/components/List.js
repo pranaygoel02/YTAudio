@@ -59,7 +59,7 @@ function List({data,title,playlistid}) {
                             }
                             }}>Add to playlist</button>}
                             
-                        {(pathname !== '/' && pathname!=='/fav') && <button onClick={()=>dispatch(removeFromPlaylist(item,playlistid))}>Remove from playlist</button>}
+                        {(pathname !== '/' && pathname!=='/fav' && pathname==='/playlist/.*') && <button onClick={()=>dispatch(removeFromPlaylist(item,playlistid))}>Remove from playlist</button>}
                         {storeData.fav.filter(e => e.key === item.key).length === 0 && <button onClick={()=>dispatch(addFav(item))}>Make Fav</button>}
                         {storeData.fav.filter(e => e.key === item.key).length !== 0 && <button onClick={()=>dispatch(removeFav(item))}>Remove from Fav</button>}
                     </div>

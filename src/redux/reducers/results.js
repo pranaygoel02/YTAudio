@@ -1,6 +1,7 @@
 const initialState = {
     loading : false,
-    data : [],
+    tracks : [],
+    artists: [],
     error: ''
 }
 
@@ -15,14 +16,16 @@ const resultReducer = (state = initialState, action) => {
         case 'SEARCH_RESULT_SUCCESS': {
             return {
                 loading: false,
-                data: action.payload,
+                tracks: action.tracks,
+                artists: action.artists,
                 error: ''
             }
         }
         case 'SEARCH_RESULT_FAILURE': {
             return {
                 loading: false,
-                data: [],
+                tracks: [],
+                artists: [],
                 error: action.payload
             }
         }

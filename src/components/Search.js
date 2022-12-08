@@ -1,6 +1,7 @@
 import React,{useState,useEffect} from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import {search,searchResult} from '../redux/actions/index'
+import Artists from './Artists'
 import List from './List'
 
 function Search() {
@@ -32,6 +33,7 @@ function Search() {
         <button type='submit'>Search</button>
         </form>
         {result.data && <button onClick={()=>setShowSearchResults(prev=>!prev)}>{showSearchResults ? 'Hide' : 'Show'} Results</button>}
+        
         <div style={{display: showSearchResults ? 'block' : 'none'}}>
         {result.loading && <p>Loading...</p>}
         {result.data && result.data.map((item,idx)=><p role={'button'} onClick={()=>handleSearchQuery(item)}>{item}</p>)}
@@ -39,7 +41,11 @@ function Search() {
         </div>
         <div>
         {searchResults.loading && <p>Loading...</p>}
-        {searchResults.data && <List title={searchQuery} data={searchResults.data}/>}
+        <h1>{searchQuery}</h1>
+        <div style={{display:'flex',gap:'16px'}}>
+        {searchResults.tracks && <List title={'Songs'} data={searchResults.tracks}/>}
+        {searchResults.artists && <Artists title={'Artists'} data={searchResults.artists}/>}
+        </div>
         {searchResults.error && !result.loading && <p>{result.error}</p>}
         </div>
     </div>

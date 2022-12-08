@@ -96,10 +96,11 @@ export const searchResultRequest = () => {
     }
 }
 
-export const searchResultSuccess = (data) => {
+export const searchResultSuccess = (tracks,artists) => {
     return {
         type: 'SEARCH_RESULT_SUCCESS',
-        payload: data
+        tracks: tracks,
+        artists: artists
     }
 }
 
@@ -115,7 +116,7 @@ export const searchResult = (query) => {
     const options = {
         method: 'GET',
         url: 'https://shazam.p.rapidapi.com/search',
-        params: {term: query, locale: 'en-US', offset: '7', limit: '5'},
+        params: {term: query, locale: 'en-US', offset: '0', limit: '5'},
         headers: {
           'X-RapidAPI-Key': 'eb87d280d8msh1f6138ec6acc772p1ae74ajsn7328652ffde6',
           'X-RapidAPI-Host': 'shazam.p.rapidapi.com'
@@ -126,7 +127,7 @@ export const searchResult = (query) => {
             dispatch(searchResultRequest())
             axios.request(options).then(function (response) {
                 console.log(response.data);
-                dispatch(searchResultSuccess(response.data.tracks.hits.map(hit=>hit.track)))
+                dispatch(searchResultSuccess(response.data.tracks?.hits.map(hit=>hit.track),response.data.artists?.hits.map(hit=>hit.artist)))
             }).catch(function (error) {
                 console.error(error);
                 dispatch(searchResultFailure('No results found'))

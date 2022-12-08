@@ -17,7 +17,10 @@ function List({data,title,playlistid}) {
         e.preventDefault()
         var checkboxes = document.querySelectorAll('input[type=checkbox]:checked')
         for (var i = 0; i < checkboxes.length; i++) {
-          dispatch(addToPlaylist(selected,checkboxes[i].id))
+            if(storeData.playlist[checkboxes[i].id].songs.filter(item=>item.key === selected.key).length === 0)
+                dispatch(addToPlaylist(selected,checkboxes[i].id))
+            else
+                alert('Already in playlist')
         }
         setShowPlaylists(prev=>false)
         setSelected(prev=>[])

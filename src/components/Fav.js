@@ -5,7 +5,9 @@ import {useSelector} from 'react-redux'
 function Fav() {
   const favs = useSelector(state=> state.fav)
     return (
-    <List data={favs}/>
+        <>
+            <List data={favs} title={'Your Favs'}/>
+        </>
   )
 }
 

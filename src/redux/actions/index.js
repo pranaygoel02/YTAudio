@@ -1,5 +1,5 @@
 import axios from 'axios';
-  
+
   export const addFav = (item) => {
     return {
         type: 'ADD_FAV',
@@ -38,10 +38,11 @@ export const addNewPlaylist = (item) => {
     }
 }
 
-export const removePlaylist = (item) => {
+export const removePlaylist = (title,playlistid) => {
     return {
         type: 'REMOVE_PLAYLIST',
-        payload: item
+        title: title,
+        id: playlistid
     }
 }
 
@@ -134,3 +135,139 @@ export const searchResult = (query) => {
             });
         }
     }
+
+
+    export const play = (song) => {
+        return {
+            type: 'PLAY',
+            payload: song,
+        }
+    }
+
+    export const pause = () => {
+        return {
+            type: 'PAUSE'
+        }
+    }
+
+    export const resume = () => {
+        return {
+            type: 'RESUME'
+        }
+    }
+
+    export const mute = () => {
+        return {
+            type: 'MUTE'
+        }
+    }
+
+    export const unmute = () => {
+        return {
+            type: 'UNMUTE'
+        }
+    }
+    export const setVolume = (volume) => {
+        return {
+            type: 'SET_VOLUME',
+            payload: volume
+        }
+    }
+
+    export const loop = () => {
+        return {
+            type: 'LOOP'
+        }
+    }
+
+    export const searchListRequest = () => {
+        return {
+            type: 'SEARCH_LIST_REQUEST',
+        }
+    }
+
+    export const searchListSuccess = (data) => {
+        return {
+            type: 'SEARCH_LIST_SUCCESS',
+            payload: data
+        }
+    }
+
+    export const searchListFailure = (error) => {
+        return {
+            type: 'SEARCH_LIST_FAILURE',
+            payload: error
+        }
+    }
+
+    export const searchList = (query) => {
+    
+        const options = {
+            method: 'GET',
+            url: 'https://shazam.p.rapidapi.com/charts/track',
+            params: {locale: 'en-US', pageSize: '20', startFrom: '0'},
+            headers: {
+              'X-RapidAPI-Key': 'eb87d280d8msh1f6138ec6acc772p1ae74ajsn7328652ffde6',
+              'X-RapidAPI-Host': 'shazam.p.rapidapi.com'
+            }
+          };          
+    
+            return (dispatch) => {
+                dispatch(searchListRequest())
+                axios.request(options).then(function (response) {
+                        console.log(response.data);
+                        dispatch(searchListSuccess(response.data.tracks))
+                        localStorage.setItem('New List', JSON.stringify(response.data.tracks))
+                        localStorage.setItem('Date', new Date())
+                    }).catch(function (error) {
+                        console.error(error);
+                        dispatch(searchListFailure('Oops! Data is currently unavailable. Please try again later'))
+                    });
+                
+            }
+        }
+
+        export const searchTrackRequest = () => {
+            return {
+                type: 'SEARCH_TRACK_REQUEST',
+            }
+        }
+
+        export const searchTrackSuccess = (data) => {
+            return {
+                type: 'SEARCH_TRACK_SUCCESS',
+                payload: data
+            }
+        }
+
+        export const searchTrackFailure = (error) => {
+            return {
+                type: 'SEARCH_TRACK_FAILURE',
+                payload: error
+            }
+        }
+
+        export const searchTrack = (song) => {
+            const options = {
+                method: 'GET',
+                url: 'https://shazam-core.p.rapidapi.com/v1/tracks/youtube-video',
+                params: {track_id: song.key, name: song.title},
+                headers: {
+                  'X-RapidAPI-Key': 'eb87d280d8msh1f6138ec6acc772p1ae74ajsn7328652ffde6',
+                  'X-RapidAPI-Host': 'shazam-core.p.rapidapi.com'
+                }
+              };
+
+            return (dispatch) => {
+                dispatch(searchTrackRequest())
+                axios.request(options).then(function (response) {
+                    console.log(response.data);
+                    dispatch(searchTrackSuccess(response.data.actions[0].uri))
+                    dispatch(play(song))
+                    console.log(response.data.actions[0].uri);
+                }).catch(function (error) {
+                    console.error(error);
+                    dispatch(searchTrackFailure('Oops! Data is currently unavailable. Please try again later'))
+                });
+            }
+        }

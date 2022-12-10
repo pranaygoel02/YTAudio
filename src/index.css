@@ -1,0 +1,47 @@
+:root{
+    background-color:'#101012'
+}
+::-webkit-scrollbar{
+    width: 4px;
+}
+::-webkit-scrollbar-track{
+    background: #101012;
+}
+::-webkit-scrollbar-thumb{
+    background: #888;
+    border-radius: 1em;
+}
+.bg{
+    background-color:'#101012'
+}
+.show-btns{
+    background: rgba(0,0,0,0.7);
+    opacity: 0;
+}
+
+.show-btns:hover{
+    opacity: 1;
+}
+
+.form-control:focus{
+    box-shadow: none;
+}
+
+.player{
+    transition: all 350ms ease-out;
+    transform: translateY(100%);
+}
+
+.player-play{
+    transform: translateY(0%);
+}
+
+.progress-btn{
+    opacity: 0;
+    transition: all 150ms ease-in;
+}
+
+.progress-btn:hover{
+    opacity: 1;
+    cursor: pointer;
+}

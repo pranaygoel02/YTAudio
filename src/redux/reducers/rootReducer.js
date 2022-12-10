@@ -2,18 +2,18 @@ import favReducer from "./fav";
 import playlistReducer from "./playlist";
 import searchReducer from "./search";
 import resultReducer from "./results";
+import { playerReducer } from "./player";
+import listReducer from "./list";
+import trackReducer from "./track";
 import { combineReducers } from "redux";
-
-
-// const rootReducer = {
-//     fav: favReducer,
-//     playlist: playlistReducer
-// }
 
 const rootReducer = combineReducers({
     fav: favReducer,
     playlist: playlistReducer,
     search: searchReducer,
-    result: resultReducer
+    result: resultReducer,
+    player: playerReducer,
+    list: listReducer,
+    track: trackReducer
 })
 export default rootReducer;

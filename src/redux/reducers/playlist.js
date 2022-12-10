@@ -20,8 +20,8 @@ const playlistReducer = (state = initialState, action) => {
             return [...state, action.payload]
         }
         case 'REMOVE_PLAYLIST': {
-            localStorage.setItem('Playlist', JSON.stringify(state.filter((item) => item.name !== action.payload)))
-            return state.filter((item) => item.name !== action.payload)
+            localStorage.setItem('Playlist', JSON.stringify(state.filter((item) => item.name !== action.title)))
+            return state.filter((item) => item.name !== action.title)
         }
         default: return state
     }

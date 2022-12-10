@@ -7,6 +7,8 @@ import PlaylistLinks from './components/PlaylistLinks'
 import Fav from './components/Fav'
 import Sidenav from './components/Sidenav'
 import Search from './components/Search';
+import Navigation from './components/Navbar';
+import Player from './components/Player';
 function App() {
   return (
     <div>
@@ -15,13 +17,14 @@ function App() {
           <Route path="/" element={<Sidenav/>}>
             <Route path="/" element={<Home/>} />
             <Route path="playlist" element={<PlaylistLinks/>}>
-              <Route path=":id/:name" element={<Playlist/>}/>
             </Route>
+            <Route path="playlist/:id/:name" element={<Playlist/>}/>
             <Route path="fav" element={<Fav/>} />
             <Route path='search' element={<Search/>}/>
           </Route>
         </Routes>
       </Router>
+      <Player/>
     </div>
   )
 }

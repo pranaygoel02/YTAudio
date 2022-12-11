@@ -27,25 +27,21 @@ function Player() {
     }
 
     const handleProgress = (progress) => {
-        dispatch(setProgress(progress.played * 100))
+        dispatch(setProgress(progress.played * 100,progress.playedSeconds))
     }
 
+    const handlePause = () => {
+        dispatch(pause())
+    }
 
-    // useEffect(()=>{
-    //     if(player.play){
-    //         playerRef.current.onPlay(console.log(playerRef.current.getDuration()))
-
-    //         // dispatch(setDuration(playerRef.current.getDuration()))
-    //     }
-    //     else{
-            
-    //     }
-    // },[player.song?.key])
+    const handleResume = () => {
+        dispatch(resume())
+    }
 
   return (
     <div className={`vw-100 text-white border-top border-dark p-3 pt-2 pb-2 d-flex align-items-center justify-content-between position-fixed player ${(player.play || player.song !== null) && 'player-play'}`} style={{bottom:0,background:'#111012'}}>
         <ProgressBar/>
-        <ReactPlayer ref={playerRef} onStart={handleDuration} playsinline={true} onProgress={handleProgress} style={{position:'absolute',top:-100,left:'44%',zIndex:-1,visibility:'visible',touchAction:'none'}} volume={player.volume/100} loop={player.loop} controls={false} width='300px' height='200px' playing={player?.play} muted={player.mute} url={storeData.track.track}/>
+        <ReactPlayer ref={playerRef} onStart={handleDuration} onPause={handlePause} onPlay={handleResume} playsinline={true} onProgress={handleProgress} style={{position:'absolute',top:10,left:'44%',zIndex:-1,visibility:'hidden',touchAction:'none'}} volume={player.volume/100} loop={player.loop} controls={false} width='20px' height='20px' playing={player?.play} muted={player.mute} url={storeData.track.track}/>
         <div id='play-control'>
             <SkipPreviousIcon/>
             {player.play  ? <PauseIcon fontSize='large' onClick={()=>dispatch(pause())}/> : <PlayArrowIcon fontSize='large' onClick={()=>dispatch(resume())}/>}

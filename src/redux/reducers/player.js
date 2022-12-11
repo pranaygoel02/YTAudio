@@ -6,7 +6,8 @@ const initialState = {
     volume: 100,
     loop: false,
     duration: 0,
-    progress: 0
+    progress: 0,
+    progress_seconds: 0
 };
 
 export const playerReducer = (state = initialState, action) => {
@@ -65,7 +66,8 @@ export const playerReducer = (state = initialState, action) => {
         case 'SET_PROGRESS': {
             return {
                 ...state,
-                progress: action.payload
+                progress: action.payload,
+                progress_seconds: action.seconds
             }
         }
         default: return state

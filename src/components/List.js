@@ -61,7 +61,7 @@ function List({data,title,playlistid,more}) {
                 <button className='btn btn-outline-primary btn-sm' type={'submit'}>Add</button>
             </form>}
             {showAlert && <NewAlert setShowAlert={setShowAlert} head={'No Playlists Found!'} descp={'Please add your first playlist'} variant={'danger'} link={'/playlist'}/>}
-        <div className='d-flex flex-row gap-4 flex-wrap justify-content-start align-items-start'>
+        <div className='d-flex list gap-4 flex-wrap justify-content-start align-items-start'>
         {data.map((item,idx)=>{
             return(
                 <div className='d-flex flex-column justify-content-start align-items-center  position-relative' >

@@ -188,10 +188,11 @@ export const searchResult = (query) => {
         }
     }
 
-    export const setProgress = (progress) => {
+    export const setProgress = (progress,progressSec) => {
         return {
             type: 'SET_PROGRESS',
-            payload: progress
+            payload: progress,
+            seconds: progressSec
         }
     }
 

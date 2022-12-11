@@ -39,7 +39,7 @@ function Player() {
     }
 
   return (
-    <div className={`vw-100 text-white border-top border-dark p-3 pt-2 pb-2 d-flex align-items-center justify-content-between position-fixed player ${(player.play || player.song !== null) && 'player-play'}`} style={{bottom:0,background:'#111012'}}>
+    <div className={`vw-100 text-white border-top border-dark p-3 pt-2 pb-2 d-flex align-items-center justify-content-between position-fixed player ${(player.play || player.song !== null) && 'player-play'}`} style={{bottom:-10,background:'#111012'}}>
         <ProgressBar/>
         <ReactPlayer ref={playerRef} onStart={handleDuration} onPause={handlePause} onPlay={handleResume} playsinline={true} onProgress={handleProgress} style={{position:'absolute',top:10,left:'44%',zIndex:-1,visibility:'hidden',touchAction:'none'}} volume={player.volume/100} loop={player.loop} controls={false} width='20px' height='20px' playing={player?.play} muted={player.mute} url={storeData.track.track}/>
         <div id='play-control'>

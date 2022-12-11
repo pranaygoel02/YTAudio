@@ -35,7 +35,7 @@ function PlaylistLinks() {
             </div>
             }
             {/* {playlists.length === 0 && <p className='text-muted mb-0'>No playlists found</p>} */}
-            <div className='d-flex gap-4 align-items-center justify-content-start pt-4'>
+            <div className='d-flex gap-4 align-items-center justify-content-start pt-4 playlist-links'>
             {playlists.map((playlist,idx) => 
             <Link to={`/playlist/${idx}/${playlist.name}`} style={{textDecoration:'none'}}><PlaylistCard title={playlist.name}/></Link>
             )

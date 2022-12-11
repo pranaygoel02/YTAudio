@@ -34,6 +34,7 @@
 
 .player-play{
     transform: translateY(0%);
+    bottom: 0 !important;
 }
 
 .progress-btn{
@@ -82,9 +83,6 @@
     font-size: 0.9em;
     opacity: 0;
   }
-
-
-
     @keyframes nav-btn-animate{
         0%{
             opacity: 0;
@@ -95,12 +93,16 @@
             transform: translateX(0%);
         }
     }
-
+    .show-btns{
+        padding: 3rem;
+        justify-content: space-between;
+    }
 @media (max-width: 576px) { 
 
     .list{
-        flex-direction: column;
+        flex-direction: row !important;
     }
+    
     .side-nav{
         display: none;
     }
@@ -125,6 +127,9 @@
     .nav-btn-animate > span:nth-child(even){
         transform: rotate(-45deg);
     }
+    .player-play{
+        bottom: 0 !important;
+    }
     #play-control{
         order: 2;
     }
@@ -139,5 +144,43 @@
         height: 10px;
         opacity: 1;
         transition: all 150ms ease-in;
+      }
+      .add-playlist-form{
+        top: 2.5em !important;
+      }
+      .card{
+        align-self: flex-start !important;
+        width: max-content !important;
+        width: 100% !important;
+        /* flex-direction: row !important; */
+        font-size: smaller !important;
+      }
+      .card > div > h2 {
+        text-overflow: ellipsis;
+      }
+      .card-box{
+        /* background: red; */
+        width: 46.6%;
+      }
+      .show-btns{
+        background: transparent;
+        opacity: 1;
+        padding: 2rem !important;
+        padding-top: 1rem !important;
+        right: 50%;
+        transform: translateX(50%);
+        justify-content: flex-start;
+      }
+      .playlist-links{
+        flex-wrap: wrap;
+      }
+      .playlist-card{
+        width: 170px !important;
+        aspect-ratio: 1/1 !important;
+      }
+      .playlist-card  > h2{
+        font-size: 1.4em !important;
+        color: whitesmoke;
+        /* background: #101012; */
       }
 }

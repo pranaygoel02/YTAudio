@@ -1,4 +1,4 @@
-import React from 'react'
+import React,{useEffect, useRef} from 'react'
 import { Link,Outlet } from 'react-router-dom'
 import Container from 'react-bootstrap/Container';
 import Row from 'react-bootstrap/Row';
@@ -12,12 +12,23 @@ import HomeRoundedIcon from '@mui/icons-material/HomeRounded';
 import SearchRoundedIcon from '@mui/icons-material/SearchRounded';
 import FeaturedPlayListRoundedIcon from '@mui/icons-material/FeaturedPlayListRounded';
 import FavoriteRoundedIcon from '@mui/icons-material/FavoriteRounded';
+import NavBtn from './NavBtn';
+import { useSelector } from 'react-redux';
 
 function Sidenav() {
+  const navRef = useRef()
   const {pathname} = useLocation()
+  const nav = useSelector(state => state.nav)
+  useEffect(() => {
+    if(nav.open){
+      navRef.current.classList.add('side-nav-open')
+    }else{
+      navRef.current.classList.remove('side-nav-open')
+    }
+  }, [nav.open])
   return (
     <div className="d-flex flex-row g-0">
-        <div className="d-flex justify-content-center align-items-start vh-100 position-sticky top-0 ps-2 pe-2 pt-3 border-end border-dark" style={{backgroundColor:'#101012'}}>
+        <div ref={navRef} className={"side-nav justify-content-center align-items-start vh-100 position-sticky top-0 ps-2 pe-2 pt-3 border-end border-dark"} style={{backgroundColor:'#101012'}}>
         <Nav variant="pills"  defaultActiveKey="/" className="flex-column gap-2 align-items-stretch text-center justify-content-center" >
           <Link to={'/'}><AudiotrackIcon fontSize='large' sx={{color: 'white'}} className='p-1 m-auto rounded-circle bg-primary mb-4' style={{opacity:pathname === '/' ? 0 : 1}}/></Link>
           <Nav.Link eventKey="/" className=''>
@@ -35,6 +46,7 @@ function Sidenav() {
         </Nav>
         </div>
         <div className='vw-100' style={{backgroundColor:'#000',color:'white'}}>
+          <NavBtn/>
           <Navigation/>
           <Outlet/>
         </div>

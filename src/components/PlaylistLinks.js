@@ -20,7 +20,7 @@ function PlaylistLinks() {
     setShow(prev=>false)
   }
     return (
-        <div className={`${pathname.includes('/playlist') && 'container pt-5'}`}>
+        <div className={`${pathname.includes('/playlist') && 'container pt-5 min-vh-100'}`}>
             {/* {(pathname === '/playlist' || playlists.length>0) && <h2>Your Playlists</h2>} */}
             <h2 className='fw-bold'>Your Playlists</h2>
             {pathname !== '/' && 

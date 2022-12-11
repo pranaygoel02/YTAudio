@@ -4,7 +4,9 @@ const initialState = {
     list: [],
     mute: false,
     volume: 100,
-    loop: false
+    loop: false,
+    duration: 0,
+    progress: 0
 };
 
 export const playerReducer = (state = initialState, action) => {
@@ -41,7 +43,7 @@ export const playerReducer = (state = initialState, action) => {
             }
         }
         case 'SET_VOLUME': {
-            console.log('vol:',action.payload);
+            // console.log('vol:',action.payload);
             return {
                 ...state,
                 volume: action.payload,
@@ -52,6 +54,18 @@ export const playerReducer = (state = initialState, action) => {
             return {
                 ...state,
                 loop: !state.loop
+            }
+        }
+        case 'SET_DURATION': {
+            return {
+                ...state,
+                duration: action.payload
+            }
+        }
+        case 'SET_PROGRESS': {
+            return {
+                ...state,
+                progress: action.payload
             }
         }
         default: return state

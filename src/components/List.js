@@ -22,7 +22,7 @@ function List({data,title,playlistid,more}) {
     const [showAlert, setShowAlert] = useState(false)
     const {pathname} = useLocation()
     const navigate = useNavigate()
-    console.log(pathname);
+    // console.log(pathname);
 
     const handleAddition = (e) => {
         e.preventDefault()
@@ -67,9 +67,9 @@ function List({data,title,playlistid,more}) {
                 <div className='d-flex flex-column justify-content-start align-items-center  position-relative' >
                 <Card image={item.images?.coverart} title={item.title} sub={item.subtitle} type={item.type}/>
                 <div className='position-absolute d-flex flex-column align-items-center justify-content-between gap-2 rounded w-100 p-5 show-btns' style={{height:'200px'}}>
-                        <div>
+                        <div style={{cursor:'pointer'}}>
                             {storeData.track.loading ? <Spinner/> :
-                            storeData.player.play && storeData.player.song.key === item.key ? <PauseIcon sx={{ fontSize: 70 }} onClick={()=>dispatch(pause())}/> : <PlayArrowIcon sx={{ fontSize: 70 }} onClick={()=>dispatch(searchTrack(item))}/>}
+                            storeData.player.play && storeData.player.song.key === item.key ? <PauseIcon sx={{ fontSize: 70 }} onClick={()=>dispatch(pause())}/> : <PlayArrowIcon id='play-icon' sx={{ fontSize: 70 }} onClick={()=>dispatch(searchTrack(item))}/>}
                         </div>
                         <div className='d-flex flex-row justify-content-around w-100'>
                         {pathname !== `/playlist/${playlistid}/${title.split(' ').join('%20')}` && <PlaylistAddIcon onClick={()=>{

@@ -1,4 +1,5 @@
 import axios from 'axios';
+import {Config} from '../config';
 
   export const addFav = (item) => {
     return {
@@ -67,13 +68,12 @@ export const searchFailure = (error) => {
 }
 
 export const search = (query) => {
-    
 const options = {
     method: 'GET',
     url: 'https://shazam.p.rapidapi.com/auto-complete',
     params: {term: query, locale: 'en-US'},
     headers: {
-      'X-RapidAPI-Key': 'eb87d280d8msh1f6138ec6acc772p1ae74ajsn7328652ffde6',
+      'X-RapidAPI-Key': Config.shazamKey,
       'X-RapidAPI-Host': 'shazam.p.rapidapi.com'
     }
   };
@@ -119,7 +119,7 @@ export const searchResult = (query) => {
         url: 'https://shazam.p.rapidapi.com/search',
         params: {term: query, locale: 'en-US', offset: '0', limit: '5'},
         headers: {
-          'X-RapidAPI-Key': 'eb87d280d8msh1f6138ec6acc772p1ae74ajsn7328652ffde6',
+          'X-RapidAPI-Key': process.env.REACT_APP_SHAZAM_API_KEY,
           'X-RapidAPI-Host': 'shazam.p.rapidapi.com'
         }
       };
@@ -180,6 +180,21 @@ export const searchResult = (query) => {
         }
     }
 
+    export const setDuration = (duration) => {
+        console.log('Duration: ',duration);
+        return {
+            type: 'SET_DURATION',
+            payload: duration
+        }
+    }
+
+    export const setProgress = (progress) => {
+        return {
+            type: 'SET_PROGRESS',
+            payload: progress
+        }
+    }
+
     export const searchListRequest = () => {
         return {
             type: 'SEARCH_LIST_REQUEST',
@@ -207,7 +222,7 @@ export const searchResult = (query) => {
             url: 'https://shazam.p.rapidapi.com/charts/track',
             params: {locale: 'en-US', pageSize: '20', startFrom: '0'},
             headers: {
-              'X-RapidAPI-Key': 'eb87d280d8msh1f6138ec6acc772p1ae74ajsn7328652ffde6',
+              'X-RapidAPI-Key': process.env.REACT_APP_SHAZAM_API_KEY,
               'X-RapidAPI-Host': 'shazam.p.rapidapi.com'
             }
           };          
@@ -253,7 +268,7 @@ export const searchResult = (query) => {
                 url: 'https://shazam-core.p.rapidapi.com/v1/tracks/youtube-video',
                 params: {track_id: song.key, name: song.title},
                 headers: {
-                  'X-RapidAPI-Key': 'eb87d280d8msh1f6138ec6acc772p1ae74ajsn7328652ffde6',
+                  'X-RapidAPI-Key': process.env.REACT_APP_SHAZAM_API_KEY,
                   'X-RapidAPI-Host': 'shazam-core.p.rapidapi.com'
                 }
               };
@@ -269,5 +284,12 @@ export const searchResult = (query) => {
                     console.error(error);
                     dispatch(searchTrackFailure('Oops! Data is currently unavailable. Please try again later'))
                 });
+            }
+        }
+
+
+        export const toggleNav = () => {
+            return {
+                type: 'TOGGLE_NAV'
             }
         }

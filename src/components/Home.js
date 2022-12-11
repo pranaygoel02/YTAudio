@@ -18,15 +18,15 @@ function Home() {
   useEffect(()=>{
     if(new Date().getDate() !== new Date(date).getDate())
      {
-       console.log('new date:',new Date().getDate());
-       console.log(new Date().getDate() !== date)
-        console.log('old date:',date);
-        console.log('old data:',data);
+      //  console.log('new date:',new Date().getDate());
+      //  console.log(new Date().getDate() !== date)
+      //   console.log('old date:',date);
+      //   console.log('old data:',data);
        dispatch(searchList())
      } 
     else
     {
-      console.log('same date');
+      // console.log('same date');
       dispatch(searchListSuccess(data))
     }
   },[])

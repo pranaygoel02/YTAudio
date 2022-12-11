@@ -45,3 +45,54 @@
     opacity: 1;
     cursor: pointer;
 }
+
+.side-nav{
+    display: flex;
+}
+.side-nav-open{
+    display: flex;
+}
+.size-nav-size{
+    height:100vh;
+}
+.nav-btn{
+    display: none;
+}
+
+.nav-btn:nth-child(even){
+    opacity: 0;
+}
+
+.slider::-webkit-slider-thumb  {
+    cursor: pointer;
+    opacity: 0;
+    transition: all 150ms ease-in;
+  }
+
+  .slider::-webkit-slider-thumb:hover {
+    opacity: 1;
+  }
+
+@media (max-width: 576px) { 
+    .side-nav{
+        display: none;
+    }
+    .side-nav-open{
+        display: flex;
+    }
+    .size-nav-size{
+        height:auto;
+    }
+    .nav-btn{
+        display: flex;
+    }
+    #play-control{
+        order: 2;
+    }
+    #more-control{
+        display: none !important;
+    }
+    .player-text{
+        max-width: 50%;
+    }
+}

@@ -16,13 +16,13 @@ function Search() {
   const searchResults = useSelector(state=> state.result)
   const dispatch = useDispatch()
   const handleChange = (e)=>{
-    console.log(e.target.value)
+    // console.log(e.target.value)
     setQuery(e.target.value)
   }
   const handleSearch = (e)=>{
     e.preventDefault()
     setShowSearchResults(prev=>true)
-    console.log(query)
+    // console.log(query)
     dispatch(search(query))
   }
   const handleSearchQuery = (item)=>{
@@ -31,8 +31,8 @@ function Search() {
     dispatch(searchResult(item))
   }  
   return (
-    <div className='container pt-5 pb-5'>
-        <h2 className=''>Search</h2>
+    <div className='container pt-5 pb-5 min-vh-100'>
+        <h2 className='fw-bold'>Search</h2>
         <div className='d-flex flex-row gap-2 align-items-center justify-content-between'>
         <form className='input-group needs-validation gap-2' noValidate onSubmit={handleSearch}>
         <input type={'text'} value={query} onChange={handleChange} placeholder='Search song or artists...' className='form-control bg-transparent border-secondary rounded-0 border-0 border-bottom text-primary' required ></input>

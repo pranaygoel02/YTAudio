@@ -1,6 +1,6 @@
 import React,{useEffect, useRef} from 'react'
 import { useSelector,useDispatch } from 'react-redux'
-import {play,pause,resume,mute,unmute,loop,setVolume,addFav,removeFav} from '../redux/actions/index'
+import {play,pause,resume,mute,unmute,loop,setDuration,setProgress,setVolume,addFav,removeFav} from '../redux/actions/index'
 import '../index.css'
 import PauseIcon from '@mui/icons-material/Pause';
 import PlayArrowIcon from '@mui/icons-material/PlayArrow';
@@ -22,25 +22,36 @@ function Player() {
     const player = useSelector(state=> state.player)
     const storeData = useSelector(state=> state)
 
-    useEffect(()=>{
-        if(player.play){
-            // playerRef.current.
-        }
-        else{
+    const handleDuration = () => {
+        dispatch(setDuration(playerRef.current.getDuration()))
+    }
+
+    const handleProgress = (progress) => {
+        dispatch(setProgress(progress.played * 100))
+    }
+
+
+    // useEffect(()=>{
+    //     if(player.play){
+    //         playerRef.current.onPlay(console.log(playerRef.current.getDuration()))
+
+    //         // dispatch(setDuration(playerRef.current.getDuration()))
+    //     }
+    //     else{
             
-        }
-    },[player.play,player.song])
+    //     }
+    // },[player.song?.key])
 
   return (
     <div className={`vw-100 text-white border-top border-dark p-3 pt-2 pb-2 d-flex align-items-center justify-content-between position-fixed player ${(player.play || player.song !== null) && 'player-play'}`} style={{bottom:0,background:'#111012'}}>
         <ProgressBar/>
-        <ReactPlayer ref={playerRef} style={{position:'absolute',top:10,left:'44%',zIndex:-1,visibility:'hidden',touchAction:'none'}} volume={player.volume/100} loop={player.loop} controls={false} width='20px' height='20px' playing={player?.play && 'true'} muted={player.mute} url={storeData.track.track}/>
-        <div>
+        <ReactPlayer ref={playerRef} onStart={handleDuration} playsinline={true} onProgress={handleProgress} style={{position:'absolute',top:-100,left:'44%',zIndex:-1,visibility:'visible',touchAction:'none'}} volume={player.volume/100} loop={player.loop} controls={false} width='300px' height='200px' playing={player?.play} muted={player.mute} url={storeData.track.track}/>
+        <div id='play-control'>
             <SkipPreviousIcon/>
             {player.play  ? <PauseIcon fontSize='large' onClick={()=>dispatch(pause())}/> : <PlayArrowIcon fontSize='large' onClick={()=>dispatch(resume())}/>}
             <SkipNextIcon/>
         </div>
-        <div className='d-flex align-items-center gap-2'>
+        <div className='d-flex align-items-center gap-2 player-text'>
         <img src={player.song?.images.coverart} alt={player.song?.title} className='img-fluid rounded' style={{width: '36px',aspectRatio:1}}/>
         <div className='d-flex flex-column'>
         <h2 className='fs-6 mb-0'>{player.song?.title}</h2>
@@ -48,7 +59,7 @@ function Player() {
         </div>
         </div>
         
-        <div className='d-flex flex-row align-items-center gap-4' style={{width:'15em'}}>
+        <div id='more-control' className='d-flex flex-row align-items-center gap-4' style={{width:'15em'}}>
             <RepeatOneTwoToneIcon color={player.loop ? 'primary' : 'white'} onClick={()=>dispatch(loop())}/>
             <Slider classes={{root:'w-100  rounded-0 p-0'}} style={{left:0, top:-1,height:'0.15em'}}
                 aria-label="Volume"

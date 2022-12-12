@@ -69,7 +69,7 @@ function List({data,title,playlistid,more}) {
                 <div className='position-absolute d-flex flex-column align-items-center gap-2 rounded w-100 show-btns' style={{height:'200px'}}>
                         <div style={{cursor:'pointer'}}>
                             {storeData.track.loading ? <Spinner/> :
-                            storeData.player.play && storeData.player.song.key === item.key ? <PauseIcon sx={{ fontSize: 70 }} onClick={()=>dispatch(pause())}/> : <PlayArrowIcon id='play-icon' sx={{ fontSize: 70 }} onClick={()=>dispatch(searchTrack(item))}/>}
+                            storeData.player.play && storeData.player.song?.key === item?.key ? <PauseIcon sx={{ fontSize: 70 }} onClick={()=>dispatch(pause())}/> : <PlayArrowIcon id='play-icon' sx={{ fontSize: 70 }} onClick={()=>dispatch(searchTrack(item))}/>}
                         </div>
                         <div className='d-flex flex-row justify-content-around w-100'>
                         {pathname !== `/playlist/${playlistid}/${title.split(' ').join('%20')}` && <PlaylistAddIcon onClick={()=>{

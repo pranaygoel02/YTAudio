@@ -7,6 +7,7 @@ import Navbar from 'react-bootstrap/Navbar';
 import NavDropdown from 'react-bootstrap/NavDropdown';
 import {useLocation} from 'react-router-dom';
 import AudiotrackIcon from '@mui/icons-material/Audiotrack';
+import Logo from '../assets/images/logo.png';
 
 function    Navigation() {
     const [scrollPosition, setScrollPosition] = useState(0);
@@ -27,7 +28,7 @@ function    Navigation() {
     return (
     pathname ==='/' && <div className='container' style={{position:'fixed',width:'100%', top:0,zIndex:1}}>
         <Navbar style={{background: scrollPosition === 0 && pathname==='/'  ? 'transparent' : 'black',padding:'0.8em 1em',}} >
-        <Navbar.Brand style={{color:'white'}} className='fw-bold d-flex align-items-center gap-2'><AudiotrackIcon fontSize='large' className='p-1 rounded-circle bg-primary'/> YT Audio</Navbar.Brand>
+        <Navbar.Brand style={{color:'white'}} className='fw-bold d-flex align-items-center gap-2'><img src={Logo} style={{width:'9%'}}></img> YT Audio</Navbar.Brand>
             </Navbar>
     </div>
   );

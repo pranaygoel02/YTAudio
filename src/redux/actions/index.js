@@ -196,6 +196,31 @@ export const searchResult = (query) => {
         }
     }
 
+    
+    export const seekTo = (value) => {
+        return {
+            type: 'SEEK_TO',
+            payload: value
+        }
+    }
+
+    export const seekSuccess = () => {
+        return {
+            type: 'SEEK_SUCCESS'
+        }
+    }
+
+    export const seek = (value) => {
+        return (dispatch) => {
+            console.log('====================================');
+            console.log('Seeking to: ',value);
+            console.log('====================================');
+            dispatch(seekTo(value))
+            
+            dispatch(seekSuccess())
+            dispatch(resume())
+        }
+    }
     export const searchListRequest = () => {
         return {
             type: 'SEARCH_LIST_REQUEST',

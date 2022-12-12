@@ -7,7 +7,10 @@ const initialState = {
     loop: false,
     duration: 0,
     progress: 0,
-    progress_seconds: 0
+    progress_seconds: 0,
+    seeking: false,
+    seek: 0,
+    url: ''
 };
 
 export const playerReducer = (state = initialState, action) => {
@@ -16,7 +19,9 @@ export const playerReducer = (state = initialState, action) => {
             return {
                 ...state,
                 play: true,
-                song: action.payload
+                song: action.payload,
+                seeking: false,
+                seek: 0
             }
         }
         case 'PAUSE': {
@@ -68,6 +73,27 @@ export const playerReducer = (state = initialState, action) => {
                 ...state,
                 progress: action.payload,
                 progress_seconds: action.seconds
+            }
+        }
+        case 'SEEK_TO': {
+            return {
+                ...state,
+                seeking : true,
+                seek: action.payload,
+            }
+        }
+        case 'SEEK_SUCCESS': {
+            return {
+                ...state,
+                seeking : false,
+                seek: state.seek,
+            }
+        }
+        case 'REVERT_SEEK': {
+            return {
+                ...state,
+                seeking : false,
+                seek: 0,
             }
         }
         default: return state

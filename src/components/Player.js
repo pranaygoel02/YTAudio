@@ -1,6 +1,6 @@
 import React,{useEffect, useRef} from 'react'
 import { useSelector,useDispatch } from 'react-redux'
-import {play,pause,resume,mute,unmute,loop,setDuration,setProgress,setVolume,addFav,removeFav} from '../redux/actions/index'
+import {play,pause,resume,mute,unmute,loop,setDuration,setProgress,seekSuccess,setVolume,addFav,removeFav} from '../redux/actions/index'
 import '../index.css'
 import PauseIcon from '@mui/icons-material/Pause';
 import PlayArrowIcon from '@mui/icons-material/PlayArrow';
@@ -15,6 +15,7 @@ import ProgressBar from './ProgressBar';
 import RepeatOneTwoToneIcon from '@mui/icons-material/RepeatOneTwoTone';
 import { Slider,Stack } from '@mui/material';
 import ReactPlayer from 'react-player';
+import { Spinner } from 'react-bootstrap';
 
 function Player() {
     const dispatch = useDispatch()
@@ -35,13 +36,37 @@ function Player() {
     }
 
     const handleResume = () => {
+        dispatch(seekSuccess())
         dispatch(resume())
     }
+    
+    document.body.onkeyup = function(e) {
+        if (e.key === " " ||
+            e.code === "Space"     && e.target === document.body
+        ) {
+            e.preventDefault();
+            if(player.play){
+                dispatch(pause())
+            }else{
+                dispatch(resume())
+            }
+        }
+      }
+    useEffect(() => {
+        if(player.seeking && player.seek !== null){
+            console.log('====================================');
+            console.log('seeking');
+            console.log('====================================');
+            playerRef.current.seekTo(player.seek,'fraction')
+        }
+    },[player.seeking,player.seek])
+
+
 
   return (
-    <div className={`vw-100 text-white border-top border-dark p-3 pt-2 pb-2 d-flex align-items-center justify-content-between position-fixed player ${(player.play || player.song !== null) && 'player-play'}`} style={{bottom:-10,background:'#111012'}}>
+    <div id='player-div' className={`vw-100 text-white border-top border-dark p-3 pt-2 pb-2 d-flex align-items-center justify-content-between position-fixed player ${(player.play || player.song !== null) && 'player-play'}`} style={{bottom:-10,background:'#111012'}}>
         <ProgressBar/>
-        <ReactPlayer ref={playerRef} onStart={handleDuration} onPause={handlePause} onPlay={handleResume} playsinline={true} onProgress={handleProgress} style={{position:'absolute',top:10,left:'44%',zIndex:-1,visibility:'hidden',touchAction:'none'}} volume={player.volume/100} loop={player.loop} controls={false} width='20px' height='20px' playing={player?.play} muted={player.mute} url={storeData.track.track}/>
+        <ReactPlayer ref={playerRef} onStart={handleDuration} onPause={handlePause} onPlay={handleResume} playsinline={true} onProgress={handleProgress} style={{position:'absolute',top:10,left:'44%',zIndex:-1,visibility:'hidden',touchAction:'none'}} volume={player.volume/100} loop={player.loop} controls={false} width='20px' height='20px' playing={player?.play} muted={player.mute} url={`${storeData.track.track}&t=${player.seek}`}/>
         <div id='play-control'>
             <SkipPreviousIcon/>
             {player.play  ? <PauseIcon fontSize='large' onClick={()=>dispatch(pause())}/> : <PlayArrowIcon fontSize='large' onClick={()=>dispatch(resume())}/>}

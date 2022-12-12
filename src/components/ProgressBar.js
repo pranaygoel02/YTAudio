@@ -10,6 +10,7 @@ function ProgressBar({value}){
 
     const seekSlider = document.getElementById('seek-slider')
     seekSlider && seekSlider.addEventListener('mouseup', (e) => {console.log(e.clientX/window.innerWidth);dispatch(setProgress(e.target.value,(e.target.value/100)*player.duration));dispatch(seek((e.target.value/100)*player.duration))})
+    seekSlider && seekSlider.addEventListener('pointerup', (e) => {console.log(e.clientX/window.innerWidth);dispatch(setProgress(e.target.value,(e.target.value/100)*player.duration));dispatch(seek((e.target.value/100)*player.duration))})
     // seekSlider && seekSlider.addEventListener('', (e) => {console.log(e.clientX/window.innerWidth);dispatch(seek(e.clientX/window.innerWidth))})
     return(
     <>               

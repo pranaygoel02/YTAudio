@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { useLocation,useNavigate } from 'react-router-dom'
-import {addFav,removeFav,addToPlaylist,removeFromPlaylist, removePlaylist, play,pause,searchTrack} from '../redux/actions/index'
+import {addFav,removeFav,addToPlaylist,removeFromPlaylist, removePlaylist, play,pause,searchTrack,addToQueue} from '../redux/actions/index'
 // import data from '../data/music'
 import NewAlert from './Alert'
 import Card from './Card'
@@ -12,10 +12,13 @@ import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder';
 import FavoriteIcon from '@mui/icons-material/Favorite';
 import PauseIcon from '@mui/icons-material/Pause';
 import PlayArrowIcon from '@mui/icons-material/PlayArrow';
+import QueueMusicIcon from '@mui/icons-material/QueueMusic';
 import Spinner from './Spinner'
 
 function List({data,title,playlistid,more}) {
     const storeData = useSelector(state=> state)
+    const queue = useSelector(state=> state.queue)
+    const player = useSelector(state=> state.player)
     const dispatch = useDispatch()
     const [showPlaylists, setShowPlaylists] = useState(false)
     const [selected, setSelected] = useState([])
@@ -60,7 +63,7 @@ function List({data,title,playlistid,more}) {
                 )}
                 <button className='btn btn-outline-primary btn-sm' type={'submit'}>Add</button>
             </form>}
-            {showAlert && <NewAlert setShowAlert={setShowAlert} head={'No Playlists Found!'} descp={'Please add your first playlist'} variant={'danger'} link={'/playlist'}/>}
+            {showAlert && <NewAlert setShowAlert={setShowAlert} head={'No Playlists Found!'} descp={'Please add your first playlist!'} variant={'danger'} link={'/playlist'}/>}
         <div className='d-flex list gap-4 flex-wrap justify-content-start align-items-start'>
         {data.map((item,idx)=>{
             return(
@@ -68,11 +71,11 @@ function List({data,title,playlistid,more}) {
                 <Card image={item.images?.coverart} title={item.title} sub={item.subtitle} type={item.type}/>
                 <div className='position-absolute d-flex flex-column align-items-center gap-2 rounded w-100 show-btns' style={{height:'200px'}}>
                         <div style={{cursor:'pointer'}}>
-                            {storeData.track.loading ? <Spinner/> :
-                            storeData.player.play && storeData.player.song?.key === item?.key ? <PauseIcon sx={{ fontSize: 70 }} onClick={()=>dispatch(pause())}/> : <PlayArrowIcon id='play-icon' sx={{ fontSize: 70 }} onClick={()=>dispatch(searchTrack(item))}/>}
+                            {storeData.track.loading && storeData.track.track?.key === item?.key ? <Spinner/> :
+                            storeData.player.play && queue.queue[queue.curr_id]?.key === item?.key ? <PauseIcon sx={{ fontSize: 70 }} onClick={()=>dispatch(pause())}/> : <PlayArrowIcon id='play-icon' sx={{ fontSize: 70 }} onClick={()=>dispatch(searchTrack(item,'PLAY'))}/>}
                         </div>
-                        <div className='d-flex flex-row justify-content-around w-100'>
-                        {pathname !== `/playlist/${playlistid}/${title.split(' ').join('%20')}` && <PlaylistAddIcon onClick={()=>{
+                        <div className='d-flex flex-row justify-content-around w-100 gap-2'>
+                        {/* {pathname !== `/playlist/${playlistid}/${title.split(' ').join('%20')}` && <PlaylistAddIcon onClick={()=>{
                             if (storeData.playlist.length === 0) {
                                 // alert('No playlists found')
                                 setShowAlert(prev=>true)
@@ -83,9 +86,10 @@ function List({data,title,playlistid,more}) {
                             }
                             }}/>}
                             
-                        {(pathname !== '/' && pathname!=='/fav' && pathname === `/playlist/${playlistid}/${title.split(' ').join('%20')}`) && <PlaylistRemoveIcon  onClick={()=>dispatch(removeFromPlaylist(item,playlistid))}/>}
-                        {storeData.fav.filter(e => e.key === item.key).length === 0 && <FavoriteBorderIcon  onClick={()=>dispatch(addFav(item))}/>}
-                        {storeData.fav.filter(e => e.key === item.key).length !== 0 && <FavoriteIcon onClick={()=>dispatch(removeFav(item))}/>}
+                        {(pathname !== '/' && pathname!=='/fav' && pathname === `/playlist/${playlistid}/${title.split(' ').join('%20')}`) && <PlaylistRemoveIcon  onClick={()=>dispatch(removeFromPlaylist(item,playlistid))}/>} */}
+                        {/* {storeData.fav.filter(e => e.key === item.key).length === 0 && <FavoriteBorderIcon  onClick={()=>dispatch(addFav(item))}/>}
+                        {storeData.fav.filter(e => e.key === item.key).length !== 0 && <FavoriteIcon onClick={()=>dispatch(removeFav(item))}/>} */}
+                        <QueueMusicIcon onClick={()=>dispatch(searchTrack(item,'ADD TO QUEUE'))}/>
                         </div>
                 </div>
                 </div>

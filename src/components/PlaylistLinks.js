@@ -28,7 +28,7 @@ function PlaylistLinks() {
                 {show && 
                 <form onSubmit={handleNewPlaylist} className='input-group needs-validation gap-1' noValidate>
                 <input type="text" name='playlistName' placeholder="Enter playlist name" className='form-control bg-transparent border-secondary rounded-0 border-0 border-bottom text-primary' required />
-                <button type={'submit'} className="btn btn-outline-primary rounded-pill">Add</button>
+                <button type={'submit'} className="btn btn-outline-primary rounded-pill" style={{zIndex:0}}>Add</button>
                 </form>
                 }
                 <button type="button" onClick={()=>setShow(prev=>!prev)} className={`btn btn-outline-${show ? 'secondary' : 'primary'} rounded-pill`}>{!show && 'Add new playlist'}{show && <CloseIcon/>}</button>

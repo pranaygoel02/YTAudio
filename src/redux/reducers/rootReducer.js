@@ -6,6 +6,8 @@ import { playerReducer } from "./player";
 import listReducer from "./list";
 import trackReducer from "./track";
 import navReducer from './nav'
+import lyricsReducer from "./lyrics";
+import queueReducer from "./queue";
 import { combineReducers } from "redux";
 
 const rootReducer = combineReducers({
@@ -16,6 +18,8 @@ const rootReducer = combineReducers({
     player: playerReducer,
     list: listReducer,
     track: trackReducer,
-    nav: navReducer
+    nav: navReducer,
+    lyrics: lyricsReducer,
+    queue: queueReducer
 })
 export default rootReducer;

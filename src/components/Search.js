@@ -36,7 +36,7 @@ function Search() {
         <div className='d-flex flex-row gap-2 align-items-center justify-content-between'>
         <form className='input-group needs-validation gap-2' noValidate onSubmit={handleSearch}>
         <input type={'text'} value={query} onChange={handleChange} placeholder='Search song or artists...' className='form-control bg-transparent border-secondary rounded-0 border-0 border-bottom text-primary' required ></input>
-        <button type='submit' className="btn btn-outline-primary rounded-pill"><SearchIcon/></button>
+        <button type='submit' className="btn btn-outline-primary rounded-pill" style={{zIndex:0}}><SearchIcon/></button>
         </form>
         {result.data && <button className={`btn btn-outline-secondary rounded-pill`} onClick={()=>setShowSearchResults(prev=>!prev)}>{ result.data.length > 0 && !showSearchResults ? <ArrowDropDownIcon/> : <ArrowDropUpIcon/> }</button>}
         </div>

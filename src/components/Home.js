@@ -16,6 +16,8 @@ function Home() {
   const date = localStorage.getItem('Date');
   const data = JSON.parse(localStorage.getItem('New List'));
   useEffect(()=>{
+    if(localStorage.getItem('Played Songs') === null)
+      localStorage.setItem('Played Songs',JSON.stringify([]))
     if(new Date().getDate() !== new Date(date).getDate())
      {
       //  console.log('new date:',new Date().getDate());

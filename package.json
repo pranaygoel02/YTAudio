@@ -13,7 +13,11 @@
     "@testing-library/user-event": "^13.5.0",
     "axios": "^1.2.1",
     "bootstrap": "^5.2.3",
+    "genius-lyrics": "^4.4.0",
     "immer": "^9.0.16",
+    "lyrics-dumper": "^1.0.0",
+    "lyrics-finder": "^21.7.0",
+    "music-lyrics": "^2.0.2",
     "node-sass": "^7.0.3",
     "react": "^18.2.0",
     "react-bootstrap": "^2.7.0",
@@ -24,6 +28,7 @@
     "react-scripts": "5.0.1",
     "redux": "^4.2.0",
     "redux-thunk": "^2.4.2",
+    "songlyrics": "^2.4.4",
     "web-vitals": "^2.1.4"
   },
   "scripts": {

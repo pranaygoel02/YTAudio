@@ -10,7 +10,8 @@ const initialState = {
     progress_seconds: 0,
     seeking: false,
     seek: 0,
-    url: ''
+    url: '',
+    modal_open: false,
 };
 
 export const playerReducer = (state = initialState, action) => {
@@ -94,6 +95,12 @@ export const playerReducer = (state = initialState, action) => {
                 ...state,
                 seeking : false,
                 seek: 0,
+            }
+        }
+        case 'TOGGLE_MODAL': {
+            return {
+                ...state,
+                modal_open: !state.modal_open
             }
         }
         default: return state

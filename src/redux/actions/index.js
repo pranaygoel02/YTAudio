@@ -1,5 +1,7 @@
 import axios from 'axios';
 import {Config} from '../config';
+import { getLyrics } from "lyrics-dumper";
+
 
   export const addFav = (item) => {
     return {
@@ -145,6 +147,7 @@ export const searchResult = (query) => {
     }
 
     export const pause = () => {
+        console.log('paused');
         return {
             type: 'PAUSE'
         }
@@ -221,6 +224,12 @@ export const searchResult = (query) => {
             dispatch(resume())
         }
     }
+    export const toggleModal = () => {
+        return {
+            type: 'TOGGLE_MODAL'
+        }
+    }
+    
     export const searchListRequest = () => {
         return {
             type: 'SEARCH_LIST_REQUEST',
@@ -287,12 +296,14 @@ export const searchResult = (query) => {
                 payload: error
             }
         }
+                  
 
-        export const searchTrack = (song) => {
+        export const searchTrack = (song,action) => {
+            console.log(action);
             const options = {
                 method: 'GET',
                 url: 'https://shazam-core.p.rapidapi.com/v1/tracks/youtube-video',
-                params: {track_id: song.key, name: song.title},
+                params: {track_id: song.key, name: song.title.substr(0,40)},
                 headers: {
                   'X-RapidAPI-Key': process.env.REACT_APP_SHAZAM_API_KEY,
                   'X-RapidAPI-Host': 'shazam-core.p.rapidapi.com'
@@ -300,16 +311,27 @@ export const searchResult = (query) => {
               };
 
             return (dispatch) => {
-                dispatch(searchTrackRequest())
-                axios.request(options).then(function (response) {
-                    console.log(response.data);
-                    dispatch(searchTrackSuccess(response.data.actions[0].uri))
-                    dispatch(play(song))
-                    console.log(response.data.actions[0].uri);
-                }).catch(function (error) {
-                    console.error(error);
-                    dispatch(searchTrackFailure('Oops! Data is currently unavailable. Please try again later'))
-                });
+                if(JSON.parse(localStorage.getItem('Played Songs')).length > 0){
+                    let playedSongs = JSON.parse(localStorage.getItem('Played Songs'))
+                    if(playedSongs.filter(el => el.key === song.key).length !== 0){
+                        dispatch(addToQueue(song,playedSongs.filter(el => el.key === song.key)[0].url))
+                        if(action === 'PLAY') dispatch(play(song))
+                    }
+                    else{
+                        
+                        axios.request(options).then(function (response) {
+                            console.log(response.data);
+                            dispatch(searchTrackSuccess(response.data.actions[0].uri))
+                            dispatch(addToQueue(song,response.data.actions[0].uri))
+                            localStorage.setItem('Played Songs', JSON.stringify([...playedSongs,{...song,url:response.data.actions[0].uri}]))
+                            if(action === 'PLAY') dispatch(play(song))
+                            console.log(response.data.actions[0].uri);
+                        }).catch(function (error) {
+                            console.error(error);
+                            dispatch(searchTrackFailure('Oops! Data is currently unavailable. Please try again later'))
+                        });
+                    }
+                }
             }
         }
 
@@ -319,3 +341,116 @@ export const searchResult = (query) => {
                 type: 'TOGGLE_NAV'
             }
         }
+
+
+        export const lyricsRequest = () => {
+            return {
+                type: 'LYRICS_REQUEST',
+            }
+        }
+
+        export const lyricsSuccess = (data) => {
+            return {
+                type: 'LYRICS_SUCCESS',
+                payload: data
+            }
+        }
+
+        export const lyricsFailure = (error) => {
+            return {
+                type: 'LYRICS_FAILURE',
+                payload: error
+            }
+        }
+
+        export const fetchLyrics = (title,subtitle) => {
+            const options = {
+                method: 'GET',
+                url: 'https://lyrist.vercel.app/api/'+title+'/'+subtitle,
+                headers: {"Access-Control-Allow-Origin": "*"}
+              };
+            return async (dispatch) => {
+                dispatch(lyricsRequest())
+                try {
+                    await axios.request(options).then(res => {
+                        console.log(res.json()); 
+                        // dispatch(lyricsSuccess(res.data.lyrics))
+                })
+                    // dispatch(lyricsSuccess(response))
+            }
+            catch (error) {
+                console.log(error);
+                dispatch(lyricsFailure('Lyrics is currently unavailable. Please try again later'))
+            }
+        }
+    }
+
+    export const addToQueue = (song,uri) => {
+        return {
+            type: 'ADD_TO_QUEUE',
+            payload: {
+                ...song,
+                url:uri
+            }
+        }
+    }
+
+    export const removeSong = (song) => {
+        return {
+            type: 'REMOVE_FROM_QUEUE',
+            payload: song
+        }
+    }
+
+
+    export const removeFromQueue = (song) => {
+        return (dispatch) => {
+            dispatch(removeSong(song))
+            dispatch(prevSong(song))
+        }
+    }
+
+    export const goPrev = () => {
+        return {
+            type: 'PREV_SONG',
+        }
+    }
+
+    export const goNext = () => {
+        return {
+            type: 'NEXT_SONG',
+        }
+    }
+
+    export const prevSong = (song) => {
+        return (dispatch) => {
+            dispatch(goPrev())
+            dispatch(play(song))
+        }
+    }
+
+    export const nextSong = (song) => {
+
+        console.log(song.title);
+        return (dispatch) => {
+            console.log('going next');
+            dispatch(goNext())
+            dispatch(seekTo(0))
+            dispatch(play(song))
+        }
+    }
+
+    export const setIdx = (idx) => {
+        return {
+            type: 'SET_IDX',
+            payload: idx
+        }
+    }
+
+    export const loopQueue = () => {
+        console.log('queue loop toggle');
+        return {
+            type: 'LOOP_QUEUE',
+        }
+    }
+

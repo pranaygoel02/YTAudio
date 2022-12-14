@@ -96,13 +96,13 @@ function Player() {
 
 
   return (
-    queue.queue.length > 0 && <div id='player-div' className={`vw-100 text-white border-top border-dark p-3 pt-2 pb-2 d-flex align-items-center justify-content-between position-fixed player ${(player.play || player.song !== null) && 'player-play'}`} style={{bottom:-10,background:'#111012'}}>
+    queue.queue.length > 0 && <div id='player-div' className={`vw-100 text-white border-top border-dark p-3 pt-2 pb-2 d-flex align-items-center justify-content-between position-fixed player ${ queue.queue.length>0 && 'player-play'}`} style={{bottom:-10,background:'#111012'}}>
         <SongModal/>
         <ProgressBar/>
         <ReactPlayer ref={playerRef} onStart={handleDuration} onPause={handlePause} onEnded={handleEnd} onPlay={handleResume} playsinline={true} onProgress={handleProgress} style={{position:'absolute',top:10,left:'44%',zIndex:-1,visibility:'hidden',touchAction:'none'}} volume={player.volume/100} loop={player.loop} controls={false} width='20px' height='20px' playing={player?.play} muted={player.mute} url={`${queue?.queue[queue.curr_id]?.url}&t=${player.seek}`}/>
         <div id='play-control' className='d-flex align-items-center gap-1'>
             <SkipPreviousIcon onClick={()=>dispatch(prevSong(queue.queue[queue.curr_id >= 1 ? queue.curr_id-1 : queue.curr_id]))}/>
-            {player.duration === 0  || player?.loading ? <Spinner/> : player?.play ? <PauseIcon fontSize='large' onClick={()=>dispatch(pause())}/> : <PlayArrowIcon fontSize='large' onClick={()=>dispatch(resume())}/>}
+            {player.duration === 0  && player?.loading ? <Spinner/> : player?.play && player?.duration > 0 ? <PauseIcon fontSize='large' onClick={()=>dispatch(pause())}/> : <PlayArrowIcon fontSize='large' onClick={()=>dispatch(resume())}/>}
             <SkipNextIcon onClick={()=>dispatch(nextSong(queue.queue[queue.curr_id < queue.queue.length-1 ? queue.curr_id+1 : queue.curr_id]))}/>
         </div>
         <div style={{cursor:'pointer'}} onClick={()=>dispatch(toggleModal())} className='d-flex align-items-center  gap-2 player-text'>

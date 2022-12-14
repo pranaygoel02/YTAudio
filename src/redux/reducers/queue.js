@@ -27,6 +27,12 @@ const queueReducer = (state = initialState, action) => {
                 curr_id: action.payload
             }
         }
+        case 'SET_IDX_END' : {
+            return {
+                ...state,
+                curr_id: state.queue.length - 1,
+            }
+        }
         case 'CLEAR_QUEUE': {
             return {
                 ...state,

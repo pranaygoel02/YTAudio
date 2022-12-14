@@ -315,7 +315,10 @@ export const searchResult = (query) => {
                     let playedSongs = JSON.parse(localStorage.getItem('Played Songs'))
                     if(playedSongs.filter(el => el.key === song.key).length !== 0){
                         dispatch(addToQueue(song,playedSongs.filter(el => el.key === song.key)[0].url))
-                        if(action === 'PLAY') dispatch(play(song))
+                        if(action === 'PLAY'){
+                            dispatch(setIdxEnd())
+                            dispatch(play(song))
+                        } 
                     }
                     else{
                         
@@ -324,7 +327,10 @@ export const searchResult = (query) => {
                             dispatch(searchTrackSuccess(response.data.actions[0].uri))
                             dispatch(addToQueue(song,response.data.actions[0].uri))
                             localStorage.setItem('Played Songs', JSON.stringify([...playedSongs,{...song,url:response.data.actions[0].uri}]))
-                            if(action === 'PLAY') dispatch(play(song))
+                            if(action === 'PLAY'){
+                                dispatch(setIdxEnd())
+                                dispatch(play(song))
+                            } 
                             console.log(response.data.actions[0].uri);
                         }).catch(function (error) {
                             console.error(error);
@@ -444,6 +450,12 @@ export const searchResult = (query) => {
         return {
             type: 'SET_IDX',
             payload: idx
+        }
+    }
+
+    export const setIdxEnd = () => {
+        return {
+            type: 'SET_IDX_END',
         }
     }
 

@@ -33,6 +33,13 @@ const queueReducer = (state = initialState, action) => {
                 curr_id: state.queue.length - 1,
             }
         }
+        case 'SET_QUEUE' : {
+            return {
+                ...state,
+                queue: action.payload,
+                curr_id: 0
+            }
+        }
         case 'CLEAR_QUEUE': {
             return {
                 ...state,

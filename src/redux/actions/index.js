@@ -466,3 +466,9 @@ export const searchResult = (query) => {
         }
     }
 
+    export const setQueue = (queue) => {
+        return {
+            type: 'SET_QUEUE',
+            payload: queue
+        }
+    }

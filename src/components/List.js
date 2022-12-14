@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { useLocation,useNavigate } from 'react-router-dom'
-import {addFav,removeFav,addToPlaylist,removeFromPlaylist, removePlaylist, play,pause,searchTrack,addToQueue} from '../redux/actions/index'
+import {addFav,removeFav,addToPlaylist,removeFromPlaylist, removePlaylist,setQueue, play,pause,searchTrack,addToQueue} from '../redux/actions/index'
 // import data from '../data/music'
 import NewAlert from './Alert'
 import Card from './Card'
@@ -12,6 +12,7 @@ import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder';
 import FavoriteIcon from '@mui/icons-material/Favorite';
 import PauseIcon from '@mui/icons-material/Pause';
 import PlayArrowIcon from '@mui/icons-material/PlayArrow';
+import PlaylistPlayIcon from '@mui/icons-material/PlaylistPlay';
 import QueueMusicIcon from '@mui/icons-material/QueueMusic';
 import Spinner from './Spinner'
 
@@ -49,6 +50,7 @@ function List({data,title,playlistid,more}) {
             dispatch(removePlaylist(title,playlistid))
             navigate('/playlist')
         }}>Remove Playlist</button>}
+        {pathname === '/fav' && data.length > 0 && <button onClick={()=>dispatch(setQueue(data))} className='btn btn-sm rounded-pill btn-outline-secondary'>Play All</button>}
         </div>
         {showPlaylists && 
             <form className='form-control p-3 d-flex flex-column gap-2 m-3' style={{position:'fixed',zIndex:2, isolation:'isolate', right:0,top:0,maxWidth:'max-content'}} onSubmit={handleAddition}>
@@ -84,11 +86,11 @@ function List({data,title,playlistid,more}) {
                                 setSelected(prev=>item)
                                 setShowPlaylists(prev=>!prev)
                             }
-                            }}/>}
+                            }}/>} */}
                             
-                        {(pathname !== '/' && pathname!=='/fav' && pathname === `/playlist/${playlistid}/${title.split(' ').join('%20')}`) && <PlaylistRemoveIcon  onClick={()=>dispatch(removeFromPlaylist(item,playlistid))}/>} */}
-                        {/* {storeData.fav.filter(e => e.key === item.key).length === 0 && <FavoriteBorderIcon  onClick={()=>dispatch(addFav(item))}/>}
-                        {storeData.fav.filter(e => e.key === item.key).length !== 0 && <FavoriteIcon onClick={()=>dispatch(removeFav(item))}/>} */}
+                        {(pathname !== '/' && pathname!=='/fav' && pathname === `/playlist/${playlistid}/${title.split(' ').join('%20')}`) && <PlaylistRemoveIcon  onClick={()=>dispatch(removeFromPlaylist(item,playlistid))}/>}
+                        {/* {storeData.fav.filter(e => e.key === item.key).length === 0 && <FavoriteBorderIcon  onClick={()=>dispatch(addFav(item))}/>} */}
+                        {storeData.fav.filter(e => e.key === item.key).length !== 0 && <FavoriteIcon onClick={()=>dispatch(removeFav(item))}/>}
                         <QueueMusicIcon onClick={()=>dispatch(searchTrack(item,'ADD TO QUEUE'))}/>
                         </div>
                 </div>

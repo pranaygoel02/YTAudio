@@ -311,7 +311,7 @@ export const searchResult = (query) => {
               };
 
             return (dispatch) => {
-                if(JSON.parse(localStorage.getItem('Played Songs')).length > 0){
+                if(JSON.parse(localStorage.getItem('Played Songs')).length >= 0){
                     let playedSongs = JSON.parse(localStorage.getItem('Played Songs'))
                     if(playedSongs.filter(el => el.key === song.key).length !== 0){
                         dispatch(addToQueue(song,playedSongs.filter(el => el.key === song.key)[0].url))

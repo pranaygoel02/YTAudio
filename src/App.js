@@ -10,6 +10,10 @@ import Search from './components/Search';
 import Navigation from './components/Navbar';
 import Player from './components/Player';
 function App() {
+  useEffect(()=>{
+    if(localStorage.getItem('Played Songs') === null)
+      localStorage.setItem('Played Songs',JSON.stringify([]))
+  },[])
   return (
     <div>
       <Router>

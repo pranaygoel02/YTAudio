@@ -45,12 +45,14 @@ function List({data,title,playlistid,more}) {
     <div>
         <div className='d-flex flex-row justify-content-between align-items-center mb-4'>
         <h2 style={{fontWeight:`${pathname !== '/search' && 'bold'}`}}>{title}</h2>
+        <div className='d-flex flex-row align-items-center gap-2'>
         {title !== 'Quick Picks' && pathname!=='/fav' && more && <Link to={'/fav'} className='btn btn-sm rounded-pill btn-outline-secondary'>MORE</Link>}
         {pathname === `/playlist/${playlistid}/${title.split(' ').join('%20')}` && <button className='btn rounded-pill btn-sm btn-outline-secondary' onClick={()=>{
             dispatch(removePlaylist(title,playlistid))
             navigate('/playlist')
         }}>Remove Playlist</button>}
-        {pathname === '/fav' && data.length > 0 && <button onClick={()=>dispatch(setQueue(data))} className='btn btn-sm rounded-pill btn-outline-secondary'>Play All</button>}
+        {(pathname === '/fav' || pathname === `/playlist/${playlistid}/${title.split(' ').join('%20')}`) && data.length > 0 && <button onClick={()=>dispatch(setQueue(data))} className='btn btn-sm rounded-pill btn-secondary'>Play All</button>}
+        </div>
         </div>
         {showPlaylists && 
             <form className='form-control p-3 d-flex flex-column gap-2 m-3' style={{position:'fixed',zIndex:2, isolation:'isolate', right:0,top:0,maxWidth:'max-content'}} onSubmit={handleAddition}>

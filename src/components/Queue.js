@@ -3,8 +3,10 @@ import '../index.css'
 import DeleteOutlineIcon from '@mui/icons-material/DeleteOutline';
 import DeleteForeverIcon from '@mui/icons-material/DeleteForever';
 import PlayArrowIcon from '@mui/icons-material/PlayArrow';
+import EqualizerIcon from '@mui/icons-material/Equalizer';
 import { useSelector,useDispatch } from 'react-redux'
 import {removeFromQueue, toggleModal,pause, setIdx} from '../redux/actions/index'
+import Play from './Play';
 
 function Queue() {
     const dispatch = useDispatch()
@@ -23,7 +25,8 @@ function Queue() {
                 </div>
                 </div>
                 <div className='d-flex flex-row align-items-center gap-2'>
-                <PlayArrowIcon fontSize='large' className='text-secondary' onClick={()=>dispatch(setIdx(index))}/>
+                {item.title === player.song.title ?<EqualizerIcon fontSize='large' className='text-secondary'/>:
+                <PlayArrowIcon fontSize='large' className='text-secondary' onClick={()=>dispatch(setIdx(index))}/>}
                 <DeleteForeverIcon onClick={()=>{dispatch(removeFromQueue(item)); if(queue.queue.filter(el => el.key !== item.key ).length === 0) {dispatch(toggleModal()); dispatch(pause())}}} style={{cursor:'pointer'}} className='text-secondary align-self-center' fontSize='large'/>
                 </div>
             </li>
